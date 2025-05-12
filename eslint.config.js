@@ -64,12 +64,13 @@ export default [
     },
   },
   {
-    files: ["backend/**/*.js", "api/**/*.js"], // Aplica esta configuração a arquivos .js na pasta backend E na pasta api
+    files: ["backend/**/*.cjs", "api/**/*.cjs"], // Aplica esta configuração a arquivos .cjs na pasta backend E na pasta api
     languageOptions: {
       ecmaVersion: 2020,
       globals: { ...globals.node }, // Adiciona os globals do Node.js
       parserOptions: {
         ecmaVersion: "latest",
+        sourceType: "commonjs", // Define o sourceType como "commonjs" para arquivos .cjs
       },
     },
     env: {
