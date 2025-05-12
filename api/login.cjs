@@ -1,21 +1,26 @@
-// api/login.js
+// api/login.cjs
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { promises as fs } from "fs";
-import path from "path";
+import { MongoClient } from "mongodb";
 
 const JWT_SECRET = process.env.JWT_SECRET || "suaChaveSecretaSuperSegura";
-const ADMINS_FILE = path.join(process.cwd(), "public", "admins.json");
+const MONGODB_URI = process.env.MONGODB_URI;
+const DATABASE_NAME = "delicia-pizza-db"; // Certifique-se de usar o nome correto do seu banco
+const ADMINS_COLLECTION = "administradores";
 
-const readAdmins = async () => {
-  try {
-    const data = await fs.readFile(ADMINS_FILE, "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    console.error("Erro ao ler admins:", error);
-    return [];
+async function connectDB() {
+  if (!MONGODB_URI) {
+    throw new Error("A variável de ambiente MONGODB_URI não está definida.");
   }
-};
+  const client = new MongoClient(MONGODB_URI);
+  try {
+    await client.connect();
+    return client.db(DATABASE_NAME);
+  } catch (error) {
+    console.error("Erro ao conectar ao MongoDB:", error);
+    throw error;
+  }
+}
 
 export default async (req, res) => {
   if (req.method === "POST") {
@@ -25,16 +30,24 @@ export default async (req, res) => {
         .status(400)
         .json({ message: "Nome de usuário e senha são obrigatórios." });
     }
-    const admins = await readAdmins();
-    const admin = admins.find((admin) => admin.username === username);
 
-    if (admin && (await bcrypt.compare(password, admin.password))) {
-      const token = jwt.sign({ adminId: admin.username }, JWT_SECRET, {
-        expiresIn: "1h",
-      });
-      res.status(200).json({ token });
-    } else {
-      res.status(401).json({ message: "Credenciais inválidas." });
+    try {
+      const db = await connectDB();
+      const adminsCollection = db.collection(ADMINS_COLLECTION);
+      const admin = await adminsCollection.findOne({ username });
+
+      if (admin && (await bcrypt.compare(password, admin.password))) {
+        const token = jwt.sign({ adminId: admin._id }, JWT_SECRET, {
+          // Use _id do MongoDB
+          expiresIn: "1h",
+        });
+        res.status(200).json({ token });
+      } else {
+        res.status(401).json({ message: "Credenciais inválidas." });
+      }
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      res.status(500).json({ message: "Erro interno ao fazer login." });
     }
   } else {
     res.setHeader("Allow", ["POST"]);
