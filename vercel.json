@@ -23,5 +23,8 @@
     { "source": "/pedido-confirmado", "destination": "/index.html" },
     { "source": "/admin/edit/:id", "destination": "/index.html" }
   ],
-  "routes": [{ "src": "/api/(.*)", "dest": "/api/$1" }]
+  "routes": [
+    { "src": "/api/login", "dest": "/api/login.cjs" },
+    { "src": "/api/(.*)", "dest": "/api/$1" }
+  ]
 }
