@@ -4,11 +4,9 @@
     {
       "source": "/images/:path*",
       "destination": "/backend/public/images/:path*"
-    }
-  ],
-  "routes": [
-    { "src": "/api", "dest": "backend/server.js" },
-    { "src": "/(.*)", "dest": "dist/$1" }
+    },
+    { "source": "/api", "destination": "/api" },
+    { "source": "/(.*)", "destination": "/dist/$1" }
   ],
   "builds": [
     {
