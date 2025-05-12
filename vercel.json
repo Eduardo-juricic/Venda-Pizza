@@ -8,7 +8,7 @@
   ],
   "routes": [
     { "src": "/api", "dest": "backend/server.js" },
-    { "src": "/(.*)", "dest": "src/dist/$1" }
+    { "src": "/(.*)", "dest": "dist/$1" }
   ],
   "builds": [
     {
@@ -19,12 +19,5 @@
       "src": "backend/package.json",
       "use": "@vercel/node"
     }
-  ],
-  "functions": {
-    "backend/server.js": {
-      "runtime": "nodejs18.x",
-      "memory": 512,
-      "maxDuration": 10
-    }
-  }
+  ]
 }
