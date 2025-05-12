@@ -5,8 +5,7 @@
       "source": "/images/:path*",
       "destination": "/backend/public/images/:path*"
     },
-    { "source": "/api", "destination": "/api" },
-    { "source": "/(.*)", "destination": "/dist/index.html" }
+    { "source": "/api", "destination": "/api" }
   ],
   "builds": [
     {
