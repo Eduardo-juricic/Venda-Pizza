@@ -1,0 +1,30 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api" },
+    {
+      "source": "/images/:path*",
+      "destination": "/backend/public/images/:path*"
+    }
+  ],
+  "routes": [
+    { "src": "/api", "dest": "backend/server.js" },
+    { "src": "/(.*)", "dest": "src/build/$1" }
+  ],
+  "builds": [
+    {
+      "src": "src/package.json",
+      "use": "@vercel/react-app-build"
+    },
+    {
+      "src": "backend/package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "functions": {
+    "backend/server.js": {
+      "runtime": "nodejs18.x",
+      "memory": 512,
+      "maxDuration": 10
+    }
+  }
+}

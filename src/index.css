@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "body", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "heading", sans-serif;
+}
+
+.layout-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-container main {
+  flex-grow: 1; /* Faz o main ocupar o espaço restante entre o Navbar e o Footer */
+}
+
+.cart-page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ou space-between dependendo do layout do carrinho */
+}
+
+.main-footer {
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 10px 0;
+}

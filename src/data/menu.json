@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "name": "Margherita Clássica",
+    "description": "Mussarela fresca, tomate italiano e manjericão.",
+    "price": {
+      "pequena": "21",
+      "media": "12",
+      "grande": "12",
+      "familia": "21"
+    },
+    "imagePath": "image-1746829185790-501065062.jpg",
+    "category": "salgada",
+    "isOnHomepage": true
+  },
+  {
+    "id": 2,
+    "name": "Pepperoni Picante",
+    "description": "Mussarela, pepperoni fatiado e um toque de pimenta calabresa.",
+    "price": {
+      "media": "R$ 50,00",
+      "grande": "R$ 60,00"
+    },
+    "imagePath": "image-1746829339314-176715572.jpg",
+    "category": "salgada",
+    "isOnHomepage": true
+  },
+  {
+    "id": 3,
+    "name": "Calabresa Especial",
+    "description": "Mussarela, calabresa defumada e cebola roxa.",
+    "price": {
+      "media": "R$ 48,00",
+      "grande": "R$ 58,00",
+      "familia": "R$ 70,00"
+    },
+    "imagePath": "image-1746829358508-980870049.jpg",
+    "category": "salgada",
+    "isOnHomepage": true
+  },
+  {
+    "id": 4,
+    "name": "Vegetariana Delícia",
+    "description": "Mussarela, tomate, pimentão, cebola, azeitona e milho.",
+    "price": {
+      "pequena": "R$ 40,00",
+      "media": "R$ 52,00",
+      "grande": "R$ 62,00"
+    },
+    "imagePath": "image-1746829393535-215514884.jpg",
+    "category": "salgada",
+    "isOnHomepage": true
+  },
+  {
+    "id": 5,
+    "name": "Portuguesa Tradicional",
+    "description": "Mussarela, presunto, ovo, cebola e azeitona.",
+    "price": {
+      "media": "R$ 55,00",
+      "grande": "R$ 65,00",
+      "familia": "R$ 78,00"
+    },
+    "imagePath": "image-1746829408110-988425874.jpg",
+    "category": "salgada",
+    "isOnHomepage": true
+  },
+  {
+    "id": 6,
+    "name": "Frango com Catupiry",
+    "description": "Mussarela, frango desfiado cremoso e catupiry original.",
+    "price": {
+      "media": "R$ 58,00",
+      "grande": "R$ 68,00",
+      "familia": "R$ 82,00"
+    },
+    "imagePath": "image-1746829415960-891588471.jpg",
+    "category": "salgada",
+    "isOnHomepage": true
+  }
+]
