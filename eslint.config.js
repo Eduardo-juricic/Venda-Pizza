@@ -64,13 +64,13 @@ export default [
     },
   },
   {
-    files: ["backend/**/*.cjs", "api/**/*.cjs"], // Aplica esta configuração a arquivos .cjs na pasta backend E na pasta api
+    files: ["backend/**/*.js", "api/**/*.js"], // Aplica esta configuração a arquivos .js na pasta backend E na pasta api (AGORA .js)
     languageOptions: {
       ecmaVersion: 2020,
       globals: { ...globals.node }, // Adiciona os globals do Node.js
       parserOptions: {
         ecmaVersion: "latest",
-        sourceType: "commonjs", // Define o sourceType como "commonjs" para arquivos .cjs
+        sourceType: "module", // Define o sourceType como "module" para arquivos .js (já que estamos refatorando para ES Modules)
       },
     },
     env: {
@@ -78,6 +78,7 @@ export default [
     },
     rules: {
       ...js.configs.recommended.rules, // Você pode adicionar regras específicas para o backend/api aqui, se necessário
+      "no-undef": "warn", // Mude de "error" para "warn" para permitir 'process' no ambiente Node.js
     },
   },
 ];

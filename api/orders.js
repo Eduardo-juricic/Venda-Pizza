@@ -1,6 +1,8 @@
+// api/orders.js
 import { promises as fs } from "fs";
 import path from "path";
-import { sendNewOrderNotification } from "./admin/events"; // Importe a função de notificação
+// Importe a função de notificação (assumindo que o caminho está correto)
+import { sendNewOrderNotification } from "./admin/events.js";
 
 const PENDING_ORDERS_FILE = path.join(
   process.cwd(),

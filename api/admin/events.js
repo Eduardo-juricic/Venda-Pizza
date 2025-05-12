@@ -1,3 +1,4 @@
+// api/events.js
 import { promises as fs } from "fs";
 import path from "path";
 import jwt from "jsonwebtoken";
@@ -37,6 +38,7 @@ const authenticate = (req, res) => {
     res.status(401).send({ message: "Token de autorização não encontrado." });
     return false;
   }
+  return false;
 };
 
 export default async function handler(req, res) {

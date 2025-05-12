@@ -2,7 +2,7 @@
 import bcrypt from "bcrypt";
 import { promises as fs } from "fs";
 import path from "path";
-import { authenticate } from "./utils"; // Importe a função authenticate
+import { authenticate } from "./utils.js"; // Importe a função authenticate
 
 const ADMINS_FILE = path.join(process.cwd(), "public", "admins.json");
 

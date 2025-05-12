@@ -1,9 +1,10 @@
+// api/admin/orders.js
 import { MongoClient } from "mongodb";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "suaChaveSecretaSuperSegura";
 const MONGODB_URI = process.env.MONGODB_URI; // Sua variável de ambiente do Vercel
-const DATABASE_NAME = "seu_banco_de_dados"; // Substitua pelo nome do seu banco de dados
+const DATABASE_NAME = "delicia-pizza-db"; // Substitua pelo nome do seu banco de dados
 
 async function connectDB() {
   if (!MONGODB_URI) {
@@ -36,48 +37,25 @@ const authenticate = (req) => {
 export default async function handler(req, res) {
   try {
     const db = await connectDB();
-    const menuCollection = db.collection("menu");
+    const ordersCollection = db.collection("orders");
 
     if (req.method === "GET") {
-      const { homepage } = req.query;
-      const menu = await menuCollection.find().toArray();
-      if (homepage === "true") {
-        const homepageMenu = menu.filter((item) => item.isOnHomepage);
-        res.status(200).json(homepageMenu);
-      } else {
-        res.status(200).json(menu);
-      }
-    } else if (req.method === "POST") {
       if (!authenticate(req)) {
         return res
           .status(401)
           .json({ message: "Token de autorização inválido." });
       }
 
-      const { name, description, price, imagePath, category } = req.body;
-      const isOnHomepage =
-        req.body.isOnHomepage === true ||
-        req.body.isOnHomepage === "true" ||
-        false;
-
-      const newItem = {
-        name,
-        description,
-        price,
-        imagePath,
-        category,
-        isOnHomepage: isOnHomepage,
-        id: Date.now(), // Gerar um ID único no servidor
-      };
-
-      const result = await menuCollection.insertOne(newItem);
-      res.status(201).json(result.ops[0]);
+      const pedidos = await ordersCollection
+        .find({ status: "pending" })
+        .toArray();
+      res.status(200).json(pedidos);
     } else {
-      res.setHeader("Allow", ["GET", "POST"]);
+      res.setHeader("Allow", ["GET"]);
       res.status(405).end(`Method ${req.method} Not Allowed`);
     }
   } catch (error) {
-    console.error("Erro no handler de /api/menu:", error);
-    res.status(500).json({ message: "Erro interno do servidor." });
+    console.error("Erro no handler de /api/admin/orders:", error);
+    res.status(500).json({ message: "Erro ao carregar os pedidos." });
   }
 }

@@ -1,4 +1,4 @@
-// api/login.cjs
+// api/login.js
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { MongoClient } from "mongodb";
