@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/admin/login", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/cardapio", "destination": "/index.html" },
+    { "source": "/cart", "destination": "/index.html" },
+    { "source": "/checkout", "destination": "/index.html" },
+    { "source": "/pedido-confirmado", "destination": "/index.html" },
+    { "source": "/admin/edit/:id", "destination": "/index.html" }
+  ]
+}
