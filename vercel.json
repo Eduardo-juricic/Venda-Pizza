@@ -1,4 +1,19 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.cjs",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist",
+        "buildCommand": "npm run build"
+      }
+    }
+  ],
   "rewrites": [
     { "source": "/admin/login", "destination": "/index.html" },
     { "source": "/admin", "destination": "/index.html" },
@@ -7,5 +22,6 @@
     { "source": "/checkout", "destination": "/index.html" },
     { "source": "/pedido-confirmado", "destination": "/index.html" },
     { "source": "/admin/edit/:id", "destination": "/index.html" }
-  ]
+  ],
+  "routes": [{ "src": "/api/(.*)", "dest": "/api/$1" }]
 }
