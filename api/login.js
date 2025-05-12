@@ -1,10 +1,10 @@
 // api/login.js
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const fs = require("fs").promises;
-const path = require("path");
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { promises as fs } from "fs";
+import path from "path";
 
-const JWT_SECRET = "suaChaveSecretaSuperSegura";
+const JWT_SECRET = process.env.JWT_SECRET || "suaChaveSecretaSuperSegura";
 const ADMINS_FILE = path.join(process.cwd(), "public", "admins.json");
 
 const readAdmins = async () => {

@@ -1,8 +1,8 @@
 // api/register.js
-const bcrypt = require("bcrypt");
-const fs = require("fs").promises;
-const path = require("path");
-const { authenticate } = require("./utils"); // Importe a função authenticate
+import bcrypt from "bcrypt";
+import { promises as fs } from "fs";
+import path from "path";
+import { authenticate } from "./utils"; // Importe a função authenticate
 
 const ADMINS_FILE = path.join(process.cwd(), "public", "admins.json");
 
@@ -26,7 +26,7 @@ const writeAdmins = async (admins) => {
   }
 };
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   if (req.method === "POST") {
     // Se você quiser proteger a rota de registro, descomente o código abaixo
     // const adminId = authenticate(req, res);
