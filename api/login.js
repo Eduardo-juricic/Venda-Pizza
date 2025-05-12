@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs").promises;
 const path = require("path");
 
-const JWT_SECRET = process.env.JWT_SECRET; // Use a variável de ambiente
+const JWT_SECRET = "suaChaveSecretaSuperSegura";
 const ADMINS_FILE = path.join(process.cwd(), "public", "admins.json");
 
 const readAdmins = async () => {
