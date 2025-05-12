@@ -1,0 +1,21 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api" },
+    {
+      "source": "/images/:path*",
+      "destination": "/backend/public/images/:path*"
+    },
+    { "source": "/api", "destination": "/api" },
+    { "source": "/(.*)", "destination": "/dist/index.html" }
+  ],
+  "builds": [
+    {
+      "src": "src/package.json",
+      "use": "@vercel/vite"
+    },
+    {
+      "src": "backend/package.json",
+      "use": "@vercel/node"
+    }
+  ]
+}
