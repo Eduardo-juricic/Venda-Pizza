@@ -8,12 +8,12 @@
   ],
   "routes": [
     { "src": "/api", "dest": "backend/server.js" },
-    { "src": "/(.*)", "dest": "src/build/$1" }
+    { "src": "/(.*)", "dest": "src/dist/$1" }
   ],
   "builds": [
     {
       "src": "src/package.json",
-      "use": "@vercel/react-app-build"
+      "use": "@vercel/vite"
     },
     {
       "src": "backend/package.json",
