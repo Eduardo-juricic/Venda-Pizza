@@ -64,7 +64,7 @@ export default [
     },
   },
   {
-    files: ["backend/**/*.js"], // Configuração específica para arquivos JavaScript na pasta backend
+    files: ["backend/**/*.js", "api/**/*.js"], // Aplica esta configuração a arquivos .js na pasta backend E na pasta api
     languageOptions: {
       ecmaVersion: 2020,
       globals: { ...globals.node }, // Adiciona os globals do Node.js
@@ -76,7 +76,7 @@ export default [
       node: true, // Habilita o ambiente Node.js
     },
     rules: {
-      ...js.configs.recommended.rules, // Você pode adicionar regras específicas para o backend aqui, se necessário
+      ...js.configs.recommended.rules, // Você pode adicionar regras específicas para o backend/api aqui, se necessário
     },
   },
 ];
