@@ -1,28 +1,23 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { MongoClient } from "mongodb";
 import jwt from "jsonwebtoken";
 
-const PENDING_ORDERS_FILE = path.join(
-  process.cwd(),
-  "data",
-  "pending_orders.json"
-);
 const JWT_SECRET = process.env.JWT_SECRET || "suaChaveSecretaSuperSegura";
+const MONGODB_URI = process.env.MONGODB_URI; // Sua variável de ambiente do Vercel
+const DATABASE_NAME = "seu_banco_de_dados"; // Substitua pelo nome do seu banco de dados
 
-// Certifique-se de que a pasta 'data' exista
-fs.mkdir(path.join(process.cwd(), "data"), { recursive: true }).catch(
-  console.error
-);
-
-const readPendingOrders = async () => {
-  try {
-    const data = await fs.readFile(PENDING_ORDERS_FILE, "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    console.error("Erro ao ler pedidos pendentes:", error);
-    return [];
+async function connectDB() {
+  if (!MONGODB_URI) {
+    throw new Error("A variável de ambiente MONGODB_URI não está definida.");
   }
-};
+  const client = new MongoClient(MONGODB_URI);
+  try {
+    await client.connect();
+    return client.db(DATABASE_NAME);
+  } catch (error) {
+    console.error("Erro ao conectar ao MongoDB:", error);
+    throw error;
+  }
+}
 
 const authenticate = (req) => {
   const authHeader = req.headers.authorization;
@@ -39,22 +34,27 @@ const authenticate = (req) => {
 };
 
 export default async function handler(req, res) {
-  if (req.method === "GET") {
-    if (!authenticate(req)) {
-      return res
-        .status(401)
-        .json({ message: "Token de autorização inválido." });
-    }
+  try {
+    const db = await connectDB();
+    const ordersCollection = db.collection("orders");
 
-    try {
-      const pedidos = await readPendingOrders();
+    if (req.method === "GET") {
+      if (!authenticate(req)) {
+        return res
+          .status(401)
+          .json({ message: "Token de autorização inválido." });
+      }
+
+      const pedidos = await ordersCollection
+        .find({ status: "pending" })
+        .toArray();
       res.status(200).json(pedidos);
-    } catch (error) {
-      console.error("Erro ao carregar pedidos:", error);
-      res.status(500).json({ message: "Erro ao carregar os pedidos." });
+    } else {
+      res.setHeader("Allow", ["GET"]);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
     }
-  } else {
-    res.setHeader("Allow", ["GET"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+  } catch (error) {
+    console.error("Erro no handler de /api/admin/orders:", error);
+    res.status(500).json({ message: "Erro ao carregar os pedidos." });
   }
 }
