@@ -1,5 +1,6 @@
+// AdminPanel.jsx
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Importe useNavigate
+import { useNavigate } from "react-router-dom";
 
 const AdminPanel = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -26,23 +27,23 @@ const AdminPanel = () => {
   const [pedidos, setPedidos] = useState([]);
   const [loadingPedidos, setLoadingPedidos] = useState(true);
   const [errorPedidos, setErrorPedidos] = useState(null);
-  const navigate = useNavigate(); // Inicialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/menu")
+    fetch("/api/menu") // <-- ATUALIZADO
       .then((response) => response.json())
       .then((data) => setMenuItems(data))
       .catch((error) => console.error("Erro ao buscar o menu:", error));
 
     const fetchInitialPedidos = async () => {
-      // Renomeei para clareza
       try {
         const token = localStorage.getItem("token");
         if (!token) {
           navigate("/admin/login"); // Redirecionar se não houver token
           return;
         }
-        const response = await fetch("http://localhost:5000/api/admin/orders", {
+        const response = await fetch("/api/admin/orders", {
+          // <-- ATUALIZADO
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -67,7 +68,7 @@ const AdminPanel = () => {
     fetchInitialPedidos();
 
     // Conectar ao fluxo de eventos SSE
-    const eventSource = new EventSource("http://localhost:5000/admin/events");
+    const eventSource = new EventSource("/admin/events"); // <-- ATUALIZADO
 
     eventSource.onopen = () => {
       console.log("Conexão SSE aberta com o servidor.");
@@ -96,7 +97,7 @@ const AdminPanel = () => {
       eventSource.close();
       console.log("Conexão SSE fechada.");
     };
-  }, [navigate]); // Adicione navigate como dependência
+  }, [navigate]);
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -139,7 +140,8 @@ const AdminPanel = () => {
     formData.append("image", imageFile);
 
     try {
-      const response = await fetch("http://localhost:5000/api/upload-image", {
+      const response = await fetch("/api/upload-image", {
+        // <-- ATUALIZADO
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`, // Use o token do localStorage
@@ -164,7 +166,8 @@ const AdminPanel = () => {
 
   const handleAddItem = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/menu", {
+      const response = await fetch("/api/menu", {
+        // <-- ATUALIZADO
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -195,7 +198,7 @@ const AdminPanel = () => {
   const handleSaveEdit = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/menu/${editingItem.id}`,
+        `/api/menu/${editingItem.id}`, // <-- ATUALIZADO
         {
           method: "PUT",
           headers: {
@@ -227,7 +230,7 @@ const AdminPanel = () => {
     if (window.confirm("Tem certeza que deseja remover esta pizza?")) {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/menu/${idToDelete}`,
+          `/api/menu/${idToDelete}`, // <-- ATUALIZADO
           {
             method: "DELETE",
             headers: {
@@ -254,7 +257,7 @@ const AdminPanel = () => {
   const handleMarcarEntregue = async (timestamp) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin/orders/${timestamp}/delivered`,
+        `/api/admin/orders/${timestamp}/delivered`, // <-- ATUALIZADO (assumindo que você criará essa rota)
         {
           method: "PUT",
         }
@@ -283,7 +286,7 @@ const AdminPanel = () => {
           return;
         }
         const response = await fetch(
-          `http://localhost:5000/api/admin/orders/${timestamp}`,
+          `/api/admin/orders/${timestamp}`, // <-- ATUALIZADO
           {
             method: "DELETE",
             headers: {
@@ -351,7 +354,6 @@ const AdminPanel = () => {
       <h3 className="text-xl font-semibold mb-3 text-gray-700">
         Adicionar Nova Pizza
       </h3>
-      {/* ... Seu formulário de adicionar pizza aqui ... */}
       <div className="mb-3">
         <label
           htmlFor="name"
