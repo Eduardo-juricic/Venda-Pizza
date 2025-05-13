@@ -1,4 +1,4 @@
-// api/[id].js
+// api/item-detail.js
 import { promises as fs } from "fs";
 import path from "path";
 import jwt from "jsonwebtoken";
@@ -42,7 +42,8 @@ const authenticate = (req) => {
 };
 
 export default async function handler(req, res) {
-  const { id } = req.query;
+  const { id } = req.params; // <----- A MUDANÇA IMPORTANTE AQUI
+
   const idToFind = parseInt(id);
 
   if (isNaN(idToFind)) {
