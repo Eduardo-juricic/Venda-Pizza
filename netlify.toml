@@ -1,0 +1,44 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "api"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/admin/login"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/cardapio"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/cart"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/checkout"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/pedido-confirmado"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/edit/:id"
+  to = "/index.html"
+  status = 200
