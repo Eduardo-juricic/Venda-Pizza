@@ -3,6 +3,10 @@
   publish = "dist"
   functions = "./api"
 
+[functions]
+  node_bundler = "esbuild"
+  environment = { NODE_VERSION = "20" } # Ou tente "18" se a 20 não funcionar
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
