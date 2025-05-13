@@ -2,7 +2,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 // Importe a função de notificação (assumindo que o caminho está correto)
-import { sendNewOrderNotification } from "./admin/events.js";
+import { sendNewOrderNotification } from "./admin/events.mjs";
 
 const PENDING_ORDERS_FILE = path.join(
   process.cwd(),

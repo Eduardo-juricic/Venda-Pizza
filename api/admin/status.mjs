@@ -1,4 +1,4 @@
-// api/[timestamp].js
+// api/status.mjs
 import { promises as fs } from "fs";
 import path from "path";
 import jwt from "jsonwebtoken";
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
         .json({ message: "Token de autorização inválido." });
     }
 
-    const { timestamp } = req.query;
+    const { timestamp } = req.params; // <----- A MUDANÇA IMPORTANTE AQUI
     const timestampToRemove = parseInt(timestamp);
 
     if (isNaN(timestampToRemove)) {
